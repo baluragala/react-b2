@@ -1,0 +1,13 @@
+nav ul {
+    list-style: none;
+    display: table;
+}
+
+nav ul li {
+    display: table-cell;
+    padding: 0px 10px;
+}
+
+.active {
+    font-weight: bold;
+}
