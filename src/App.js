@@ -11,9 +11,11 @@ import Company from './components/Company'
 import Checkout from './components/Checkout'
 import {Route, Switch} from 'react-router-dom'
 import Nav from './components/Nav'
-import ProductDetail from './components/ProductDetail'
-import Offer from './components/Offer'
-import ProductHome from './components/ProductHome'
+import asyncComponent from './components/AsyncComponent';
+import {getProductsActionCreator} from "./actionCreators/index";
+import {connect} from "react-redux";
+
+const AsyncProductHome = asyncComponent(() => import("./components/ProductHome"));
 
 class App extends Component {
     constructor(props) {
@@ -23,17 +25,31 @@ class App extends Component {
     render() {
         return (
             <div>
-                <Nav/>
+                {/*<Nav/>
                 <Switch>
-                    <Route path="/home" component={Home}/>
-                    <Route path="/company" component={Company}/>
-                    <Route path="/product-home" component={ProductHome}/>
-                    <Route path="/checkout" component={Checkout}/>
+                    <Route exact path="/home" component={Home}/>
+                    <Route exact path="/company" component={Company}/>
+                    <Route exact path="/product-home" component={AsyncProductHome}/>
+                    <Route exact path="/checkout" component={Checkout}/>
                     <Route component={() => <h2>Oops!!, we did not find what you are looking for...</h2>}/>
-                </Switch>
+                </Switch>*/}
+                <button onClick={this.props.getProducts}>GET PRODUCTS</button>
+                <Products products={this.props.products}/>
             </div>
         )
     }
 }
 
-export default App;
+function mapStateToProps(state) {
+    return {
+        products: state.products
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        getProducts: () => dispatch(getProductsActionCreator())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
