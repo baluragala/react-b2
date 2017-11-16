@@ -1,6 +1,8 @@
 export default (prevState = {products: [], offers: [], customers: [], sales: []}, action) => {
     switch (action.type) {
         case 'GET_PRODUCTS':
+        case 'GET_POSTS':
+        case 'GET_COMMENTS':
             return Object.assign({}, prevState, {isLoading: true});
         case 'GET_PRODUCTS_SUCCESS':
             return Object.assign({}, prevState, {isLoading: false, products: action.products});
