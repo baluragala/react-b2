@@ -23,6 +23,7 @@ class App extends Component {
     }
 
     render() {
+        console.log(this.props.data);
         return (
             <div>
                 {/*<Nav/>
@@ -34,7 +35,11 @@ class App extends Component {
                     <Route component={() => <h2>Oops!!, we did not find what you are looking for...</h2>}/>
                 </Switch>*/}
                 <button onClick={this.props.getProducts}>GET PRODUCTS</button>
-                <Products products={this.props.products}/>
+                <button onClick={this.props.getPosts}>GET POSTS</button>
+                <button onClick={this.props.getComments}>GET COMMENTS</button>
+                {this.props.isLoading ? <p>Loading...</p> :
+                    <Products products={this.props.products}/>
+                }
             </div>
         )
     }
@@ -42,13 +47,16 @@ class App extends Component {
 
 function mapStateToProps(state) {
     return {
-        products: state.products
+        products: state.products,
+        isLoading: state.isLoading
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        getProducts: () => dispatch(getProductsActionCreator())
+        getProducts: () => dispatch(getProductsActionCreator()),
+        getPosts: () => dispatch({type: 'GET_POSTS'}),
+        getComments: () => dispatch(({type: 'GET_COMMENTS'}))
     }
 }
 

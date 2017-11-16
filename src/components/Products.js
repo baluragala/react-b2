@@ -16,7 +16,7 @@ class Products extends Component {
         return (
             <div style={{margin: 20}}>
                 <h1>Products</h1>
-                {this.props.products && this.props.products.map(p => <Product product={p}/>)}
+                {this.props.products && this.props.products.map(p => <Product key={p.id} product={p}/>)}
             </div>
         )
     }

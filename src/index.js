@@ -5,10 +5,15 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import {BrowserRouter, HashRouter} from 'react-router-dom';
 import {Provider} from "react-redux";
-import {createStore} from "redux";
+import {applyMiddleware, createStore} from "redux";
 import reducer from './reducers';
+import createSagaMiddleware from 'redux-saga';
+import {getProductWatcher, watchers} from "./sagas/index";
+import {createLogger} from 'redux-logger'
 
-const store = createStore(reducer);
+let sagaMiddleware = createSagaMiddleware();
+const store = createStore(reducer, applyMiddleware(sagaMiddleware, createLogger()));
+sagaMiddleware.run(watchers);
 
 ReactDOM.render(<Provider store={store}><App/></Provider>, document.getElementById('app'));
 registerServiceWorker();
